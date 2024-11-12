@@ -1,0 +1,12 @@
+
+# Date
+date=$(date "+%a %F %R")
+
+# Alsa master volume
+volume=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
+
+# Battery Capacity 
+battery=$(cat /sys/devices/platform/soc/290400000.smc/macsmc-power/power_supply/macsmc-battery/capacity) 
+
+# Status bar
+echo  $volume "|" "Battery:" $battery "|" $date
