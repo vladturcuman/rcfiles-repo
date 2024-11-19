@@ -33,13 +33,11 @@ set expandtab
 
 let data_dir = '~/.vim'
 if empty(glob(data_dir . '/autoload/plug.vim'))
-  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 call plug#begin()
-
-" List your plugins here
 
 Plug 'prabirshrestha/vim-lsp'
 " Plug 'mattn/vim-lsp-settings'
@@ -47,38 +45,52 @@ Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-" Plug 'vladturcuman/vim-symbol-overlay'
+Plug 'vim-autoformat/vim-autoformat'
 Plug '~/workspace/vim-symbol-overlay'
+Plug '~/workspace/vim-buffer-history'
 
 call plug#end()
 
+" No swap file and autoformat on save
+au BufWrite * :Autoformat
+set noswapfile
+
+" Persistent undos
+set undofile                " Save undos after file closes
+set undodir=$HOME/.vim/undo " where to save undo histories
+set undolevels=1000         " How many undos
+set undoreload=10000        " number of lines to save for undo
+
+" Autocomplete and rust things
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
-
-
-
 if executable('rust-analyzer')
-  au User lsp_setup call lsp#register_server({
-        \   'name': 'Rust Language Server',
-        \   'cmd': {server_info->['rust-analyzer']},
-        \   'whitelist': ['rust'],
-        \ })
+    au User lsp_setup call lsp#register_server({
+                \   'name': 'Rust Language Server',
+                \   'cmd': {server_info->['rust-analyzer']},
+                \   'whitelist': ['rust'],
+                \ })
 endif
 
-
+" Normal s to surround
 xmap s <Plug>VSurround
 
-" FZF key bindings
+" FZF 
+let g:fzf_vim = {}
+let g:fzf_vim.preview_window = ['right,50%', 'ctrl-/']
 nnoremap <Space>ff :FZF<CR>
 nnoremap <Space>fs :w<CR>
-nnoremap <Space>so :SymbolOverlay<CR>
-nnoremap <Space>sd :SymbolOverlayClear<CR>
 
+" Buffer switch
+nnoremap <Space><Tab> :BufferHistorySwitch<CR>
+
+" Symbol Highlight
 set hlsearch!
 nnoremap * :SymbolOverlay<CR>
+nnoremap <Space>so :SymbolOverlay<CR>
+nnoremap <Space>sd :SymbolOverlayClear<CR>
 cnoremap noh SymbolOverlayClear
-
 
 
 

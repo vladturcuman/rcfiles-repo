@@ -6,8 +6,6 @@ zstyle ':completion:*' max-errors 4 numeric
 zstyle ':completion:*' prompt 'Maybe try:'
 zstyle :compinstall filename '/home/vturcuman/.zshrc'
 
-autoload -Uz compinit
-compinit
 # End of lines added by compinstall
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.zsh_history
@@ -17,6 +15,7 @@ setopt autocd extendedglob nomatch notify
 bindkey -v
 # End of lines configured by zsh-newuser-install
  
+
 # vi mode
 bindkey -v
 export KEYTIMEOUT=1
@@ -43,7 +42,8 @@ zle -N zle-keymap-select
 autoload -U colors && colors
 PS1="%B%{$fg[red]%}[%{$fg[blue]%}%n %{$fg[yellow]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 
-
+# Enable autocomplete
+autoload -U compinit; compinit
 
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
@@ -52,3 +52,14 @@ alias vim=vimx
 
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+# Set up autocomplete
+if [ ! -d ~/.zsh/zsh-autosuggestions ]; then
+    echo "clone"
+    git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
+fi 
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+if [[ $1 == eval ]]; then
+   	"${(q)@}"
+    set --
+fi
