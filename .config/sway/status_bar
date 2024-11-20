@@ -5,8 +5,17 @@ date=$(date "+%a %F %R")
 # Alsa master volume
 volume=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
 
-# Battery Capacity 
-battery=$(cat /sys/devices/platform/soc/290400000.smc/macsmc-power/power_supply/macsmc-battery/capacity) 
+# Battery Capacity
+battery=$(cat /sys/devices/platform/soc/290400000.smc/macsmc-power/power_supply/macsmc-battery/capacity)
+
+# RC files changed
+
+    rc_files_changed=$(cd ~/rcfiles-repo; git status -s)
+    if [[ -n $rc_files_changed ]]; then
+    rc_files_changed="Push RC Files!"
+    fi
+
 
 # Status bar
-echo  $volume "|" "Battery:" $battery "|" $date
+# echo -e  $rc_files_changed $volume "|" "Battery:" $battery "|" $date
+    echo -e "<span color='red'>${rc_files_changed}</span> ${volume} | Battery ${battery} | ${date}"
