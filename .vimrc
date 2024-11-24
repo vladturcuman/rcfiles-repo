@@ -22,7 +22,6 @@ vnoremap y "+y
 set clipboard=unnamedplus
 
 
-filetype plugin indent on
 " show existing tab with 4 spaces width
 set tabstop=4
 " when indenting with '>', use 4 spaces width
@@ -39,17 +38,24 @@ endif
 
 call plug#begin()
 
-Plug 'prabirshrestha/vim-lsp'
-" Plug 'mattn/vim-lsp-settings'
-Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'ycm-core/YouCompleteMe'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'vim-autoformat/vim-autoformat'
 Plug '~/workspace/vim-symbol-overlay'
 Plug '~/workspace/vim-buffer-history'
+Plug 'lervag/vimtex'
+Plug 'rust-lang/rust.vim'
 
 call plug#end()
+
+" Latex
+let g:tex_flavor='latex'
+let g:vimtex_view_method='zathura'
+let g:vimtex_quickfix_mode=0
+set conceallevel=1
+let g:tex_conceal='abdmg'
 
 " No swap file and autoformat on save
 au BufWrite * :Autoformat
@@ -61,22 +67,32 @@ set undodir=$HOME/.vim/undo " where to save undo histories
 set undolevels=1000         " How many undos
 set undoreload=10000        " number of lines to save for undo
 
-" Autocomplete and rust things
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
-if executable('rust-analyzer')
-    au User lsp_setup call lsp#register_server({
-                \   'name': 'Rust Language Server',
-                \   'cmd': {server_info->['rust-analyzer']},
-                \   'whitelist': ['rust'],
-                \ })
-endif
+" Auto format on save
+syntax enable
+filetype plugin indent on
+let g:rustfmt_autosave = 1
+
+" Autocomplete
+let g:ycm_complete_in_comments = 1
+let g:ycm_complete_in_strings = 1
+let g:ycm_always_populate_location_list = 1
+let g:ycm_auto_hover = ''
+map <silent> ,ht <plug>(YCMHover)
+
+" Next Error
+nnoremap ,en :lnext<CR>
+
+" Auto compile on save
+"autocmd BufWritePost * YcmForceCompileAndDiagnostics
+
+" Jump to definition
+nnoremap ,gi :YcmCompleter GoToDefinitionElseDeclaration<CR>
+noremap <silent> ,gb <C-o>
 
 " Normal s to surround
 xmap s <Plug>VSurround
 
-" FZF 
+" FZF
 let g:fzf_vim = {}
 let g:fzf_vim.preview_window = ['right,50%', 'ctrl-/']
 nnoremap <Space>ff :FZF<CR>

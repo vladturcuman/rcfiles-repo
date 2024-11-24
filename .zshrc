@@ -14,7 +14,7 @@ SAVEHIST=1000000
 setopt autocd extendedglob nomatch notify
 bindkey -v
 # End of lines configured by zsh-newuser-install
- 
+
 
 # vi mode
 bindkey -v
@@ -25,13 +25,13 @@ setopt vi
 KEYTIMEOUT=1
 # change cursor shape in vi mode
 zle-keymap-select () {
-    if [[ $KEYMAP == vicmd ]]; then
-        # the command mode for vi
-        echo -ne "\e[2 q"
-    else
-        # the insert mode for vi
-        echo -ne "\e[5 q"
-    fi
+if [[ $KEYMAP == vicmd ]]; then
+    # the command mode for vi
+    echo -ne "\e[2 q"
+else
+    # the insert mode for vi
+    echo -ne "\e[5 q"
+fi
 }
 precmd_functions+=(zle-keymap-select)
 zle -N zle-keymap-select
@@ -56,10 +56,26 @@ source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 if [ ! -d ~/.zsh/zsh-autosuggestions ]; then
     echo "clone"
     git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
-fi 
+fi
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+
+# Set up rust
+PATH=$PATH:~/.cargo/bin
+if  (( ! $+commands[rustup] )); then
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+fi
+
+# Start SSH Agent
+if [ ! -S ~/.ssh/ssh_auth_sock ]; then
+    eval `ssh-agent`
+    ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+    ssh-add ~/.ssh/git
+fi
+export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+
+
 if [[ $1 == eval ]]; then
-   	"${(q)@}"
+    "${(q)@}"
     set --
 fi
