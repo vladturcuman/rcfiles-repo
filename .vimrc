@@ -26,9 +26,8 @@ set clipboard=unnamedplus
 set tabstop=4
 " when indenting with '>', use 4 spaces width
 set shiftwidth=4
-" On pressing tab, insert 4 spaces
+" expand tab to 4 spaces
 set expandtab
-
 
 let data_dir = '~/.vim'
 if empty(glob(data_dir . '/autoload/plug.vim'))
@@ -58,19 +57,17 @@ set conceallevel=1
 let g:tex_conceal='abdmg'
 
 " No swap file and autoformat on save
-au BufWrite * :Autoformat
 set noswapfile
+syntax enable
+filetype plugin indent on
+autocmd BufWrite *.py,*.rs,*.c,*.h,*.cpp :Autoformat
+let g:rustfmt_autosave = 1
 
 " Persistent undos
 set undofile                " Save undos after file closes
 set undodir=$HOME/.vim/undo " where to save undo histories
 set undolevels=1000         " How many undos
 set undoreload=10000        " number of lines to save for undo
-
-" Auto format on save
-syntax enable
-filetype plugin indent on
-let g:rustfmt_autosave = 1
 
 " Autocomplete
 let g:ycm_complete_in_comments = 1
@@ -83,7 +80,7 @@ map <silent> ,ht <plug>(YCMHover)
 nnoremap ,en :lnext<CR>
 
 " Auto compile on save
-"autocmd BufWritePost * YcmForceCompileAndDiagnostics
+autocmd BufWritePost *.rs YcmForceCompileAndDiagnostics
 
 " Jump to definition
 nnoremap ,gi :YcmCompleter GoToDefinitionElseDeclaration<CR>

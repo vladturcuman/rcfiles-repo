@@ -40,7 +40,7 @@ zle -N zle-keymap-select
 
 # Enable colors and change prompt:
 autoload -U colors && colors
-PS1="%B%{$fg[red]%}[%{$fg[blue]%}%n %{$fg[yellow]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
+PS1="%B%{$fg[red]%}[%{$fg[blue]%}%n %{$fg[yellow]%}%~%{$fg[red]%}]%{$reset_color%}"$'\n'"$%b "
 
 # Enable autocomplete
 autoload -U compinit; compinit
