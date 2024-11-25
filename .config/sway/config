@@ -22,7 +22,7 @@ set $menu dmenu_path | wmenu | xargs swaymsg exec --
 
 output * bg #000000 solid_color
 
-default_border pixel 1
+default_border pixel 2
 smart_borders on
 gaps outer 4
 gaps inner 2
@@ -47,6 +47,7 @@ set $lock 'swaylock -f  --layout-bg-color 000000ff \
         --inside-wrong-color 00000000 '
         bindswitch --reload --locked lid:on exec $lock ; exec systemctl suspend
 
+mouse_warping container
 ### Key bindings
 #
 # Basics:
