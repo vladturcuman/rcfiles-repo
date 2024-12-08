@@ -46,6 +46,8 @@ Plug '~/workspace/vim-symbol-overlay'
 Plug '~/workspace/vim-buffer-history'
 Plug 'lervag/vimtex'
 Plug 'rust-lang/rust.vim'
+Plug 'rhysd/vim-clang-format'
+Plug 'kana/vim-operator-user'
 
 call plug#end()
 
@@ -62,6 +64,12 @@ syntax enable
 filetype plugin indent on
 autocmd BufWrite *.py,*.rs,*.c,*.h,*.cpp :Autoformat
 let g:rustfmt_autosave = 1
+let g:clang_format#style_options = {
+            \ "AllowShortIfStatementsOnASingleLine" : "true",
+            \ "AlwaysBreakTemplateDeclarations" : "true",
+            \ "Standard" : "C++11",
+            \ "SortIncludes" : "false"}
+autocmd FileType c,cpp,h ClangFormatAutoEnable
 
 " Persistent undos
 set undofile                " Save undos after file closes
