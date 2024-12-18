@@ -23,9 +23,9 @@ set clipboard=unnamedplus
 
 
 " show existing tab with 4 spaces width
-set tabstop=4
+set tabstop=2
 " when indenting with '>', use 4 spaces width
-set shiftwidth=4
+set shiftwidth=2
 " expand tab to 4 spaces
 set expandtab
 
@@ -82,7 +82,22 @@ let g:ycm_complete_in_comments = 1
 let g:ycm_complete_in_strings = 1
 let g:ycm_always_populate_location_list = 1
 let g:ycm_auto_hover = ''
+let g:ycm_enable_diagnostic_highlighting = 0
+set completeopt-=preview
 map <silent> ,ht <plug>(YCMHover)
+
+" Add numbers and color sign column
+set number
+set signcolumn=number
+set numberwidth=3
+highlight SignColumn ctermbg=235 guibg=#3e3e3e ctermfg=white guifg=white
+highlight LineNr ctermfg=darkgray guifg=#d3d3d3
+
+" Disable highlight brackets
+highlight MatchParen ctermbg=yellow ctermfg=black guibg=#ffcc00 guifg=#000000
+highlight Cursor ctermfg=black ctermbg=white guifg=#ffffff guibg=#000000
+set matchtime=1
+let g:loaded_matchparen=1
 
 " Next Error
 nnoremap ,en :lnext<CR>
