@@ -59,6 +59,7 @@ if [ ! -d ~/.zsh/zsh-autosuggestions ]; then
 fi
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+export PATH="$PATH:$HOME/.local/bin"
 
 # Set up rust
 PATH=$PATH:~/.cargo/bin

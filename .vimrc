@@ -48,6 +48,7 @@ Plug 'lervag/vimtex'
 Plug 'rust-lang/rust.vim'
 Plug 'rhysd/vim-clang-format'
 Plug 'kana/vim-operator-user'
+Plug 'ayu-theme/ayu-vim'
 
 call plug#end()
 
@@ -128,6 +129,9 @@ nnoremap <Space>so :SymbolOverlay<CR>
 nnoremap <Space>sd :SymbolOverlayClear<CR>
 cnoremap noh SymbolOverlayClear
 
-
+" Color Scheme
+set termguicolors     " enable true colors support
+let ayucolor="dark" " for mirage version of theme
+colorscheme ayu
 
 
