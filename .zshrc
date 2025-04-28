@@ -1,6 +1,8 @@
 
-# The following lines were added by compinstall
+export CFLAGS="-std=gnu11 -latomic"
+export LDFLAGS="-latomic"
 
+# The following lines were added by compinstall
 zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
 zstyle ':completion:*' max-errors 4 numeric
 zstyle ':completion:*' prompt 'Maybe try:'
@@ -80,3 +82,6 @@ if [[ $1 == eval ]]; then
     "${(q)@}"
     set --
 fi
+
+# opam configuration
+[[ ! -r /home/vturcuman/.opam/opam-init/init.zsh ]] || source /home/vturcuman/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null

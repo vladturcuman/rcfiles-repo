@@ -182,6 +182,11 @@ mode "resize" {
 bindsym $mod+Shift+r mode "resize"
 
 
+# Capture the currently active output to clipboard
+bindsym $mod+p exec grim -g "$(slurp -d)" - | wl-copy
+
+bindsym $mod+Shift+p exec  grim -g "$(slurp -d)" - > ~/screenshots/$(date +"%Y_%m_%d_%I_%M_%p").png
+
 #
 # Status Bar:
 #
