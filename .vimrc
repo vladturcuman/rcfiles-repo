@@ -130,7 +130,7 @@ nnoremap <Space>sd :SymbolOverlayClear<CR>
 cnoremap noh SymbolOverlayClear
 
 " Color Scheme
-set termguicolors     " enable true colors support
+" set termguicolors     " enable true colors support
 let ayucolor="dark" " for mirage version of theme
 colorscheme ayu
 

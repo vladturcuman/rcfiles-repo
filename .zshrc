@@ -11,7 +11,7 @@ zstyle :compinstall filename '/home/vturcuman/.zshrc'
 # End of lines added by compinstall
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.zsh_history
-HISTSIZE=1000
+HISTSIZE=10000
 SAVEHIST=1000000
 setopt autocd extendedglob nomatch notify
 bindkey -v
@@ -38,8 +38,6 @@ fi
 precmd_functions+=(zle-keymap-select)
 zle -N zle-keymap-select
 
-
-
 # Enable colors and change prompt:
 autoload -U colors && colors
 PS1="%B%{$fg[red]%}[%{$fg[blue]%}%n %{$fg[yellow]%}%~%{$fg[red]%}]%{$reset_color%}"$'\n'"$%b "
@@ -50,16 +48,23 @@ autoload -U compinit; compinit
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
 
-alias vim=vimx
+alias ll="ls -lh"
 
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+ZSH_PLUGINS=$HOME/.local/share/zsh/plugins
+
+# Set up syntax highlighting
+if [ ! -d $ZSH_PLUGINS/zsh-syntax-highlighting ]; then
+    echo "clone"
+    git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_PLUGINS/zsh-syntax-highlighting
+fi
+source $ZSH_PLUGINS/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Set up autocomplete
-if [ ! -d ~/.zsh/zsh-autosuggestions ]; then
+if [ ! -d $ZSH_PLUGINS/zsh-autosuggestions ]; then
     echo "clone"
-    git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
+    git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_PLUGINS/zsh-autosuggestions
 fi
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $ZSH_PLUGINS/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 export PATH="$PATH:$HOME/.local/bin"
 
@@ -85,3 +90,6 @@ fi
 
 # opam configuration
 [[ ! -r /home/vturcuman/.opam/opam-init/init.zsh ]] || source /home/vturcuman/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
+
+export PATH=$HOME/.local/bin:$PATH
+export LD_LIBRARY_PATH="$HOME/.local/lib:$LD_LIBRARY_PATH"
