@@ -16,10 +16,10 @@ syntax enable
 filetype plugin indent on
 
 
-nnoremap y "+
-vnoremap y "+y
+"nnoremap y "+
+"vnoremap y "+y
 
-set clipboard=unnamedplus
+" set clipboard=unnamedplus
 
 
 " show existing tab with 4 spaces width
@@ -63,7 +63,7 @@ let g:tex_conceal='abdmg'
 set noswapfile
 syntax enable
 filetype plugin indent on
-autocmd BufWrite *.py,*.rs,*.c,*.h,*.cpp :Autoformat
+autocmd BufWrite *.py,*.rs,*.c,*.h,*.cpp,*MakeFile :Autoformat
 let g:rustfmt_autosave = 1
 let g:clang_format#style_options = {
             \ "AllowShortIfStatementsOnASingleLine" : "true",

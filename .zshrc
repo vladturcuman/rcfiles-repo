@@ -1,4 +1,4 @@
-
+export SCREENDIR="$HOME/.local/screen"
 export CFLAGS="-std=gnu11 -latomic"
 export LDFLAGS="-latomic"
 
